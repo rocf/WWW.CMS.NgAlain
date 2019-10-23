@@ -1,0 +1,50 @@
+<form nz-form #createOrEditModalForm="ngForm" (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <div class="modal-title">
+            <i nz-icon nzType="form" class="mr-sm"></i>
+            <span *ngIf="hFuncId">编辑隐藏功能: {{hfunc.name}}</span>
+            <span *ngIf="!hFuncId">添加隐藏功能</span>
+        </div>
+    </div>
+
+    <nz-row>
+        <nz-col nzSpan="24" class="pl-lg">
+            <nz-form-item nz-row>
+                <nz-form-label nzFor="no" nzRequired>
+                    编号
+                </nz-form-label>
+                <nz-form-control [nzErrorTip]="nameValidationTpl" nzHasFeedback>
+                    <input nz-input #nameInput="ngModel" name="no" [(ngModel)]="hfunc.no" placeholder="编号" required
+                        maxlength="32">
+                    <ng-template #nameValidationTpl let-control>
+                        <validation-messages [formCtrl]="control"></validation-messages>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-row>
+                <nz-form-label nzFor="name" nzRequired>
+                    名称
+                </nz-form-label>
+                <nz-form-control [nzErrorTip]="surnameValidationTpl" nzHasFeedback>
+                    <input nz-input #surnameInput="ngModel" name="name" [(ngModel)]="hfunc.name" placeholder="名称"
+                        id="name" required maxlength="24">
+                    <ng-template #surnameValidationTpl let-control>
+                        <validation-messages [formCtrl]="control"></validation-messages>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-col>
+    </nz-row>
+
+
+    <div class="modal-footer">
+        <button nz-button [nzType]="'default'" type="button" (click)="close($event)" [disabled]="saving">
+            {{"Cancel" | localize}}
+        </button>
+        <button nz-button [nzType]="'primary'" type="submit" [disabled]="!createOrEditModalForm.form.valid || saving"
+            [nzLoading]="saving">
+            <i nz-icon nzType="save" *ngIf="!saving"></i> {{"Save" | localize}}
+        </button>
+    </div>
+</form>

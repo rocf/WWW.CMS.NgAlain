@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { LocalizationService } from '@abp/localization/localization.service';
 import { HFuncComponent } from './hfunc/hfunc.component';
+import { CreateOrEditHFuncModalComponent } from './hfunc/create-or-edit-hfunc-modal.component';
 
 @NgModule({
     imports: [
@@ -17,11 +18,18 @@ import { HFuncComponent } from './hfunc/hfunc.component';
         FormsModule,
         MainRoutingModule,
         AppCommonModule,
-        UtilsModule,
+        UtilsModule,        
     ],
-    declarations: [DashboardComponent, HFuncComponent],
+    declarations: [
+        DashboardComponent, 
+        HFuncComponent, 
+        CreateOrEditHFuncModalComponent,
+    ],
     providers: [
         LocalizationService
     ],
+    entryComponents: [
+        CreateOrEditHFuncModalComponent
+    ]
 })
 export class MainModule { }

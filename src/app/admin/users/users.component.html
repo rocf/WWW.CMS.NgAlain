@@ -191,7 +191,7 @@
                             <nz-divider nzType="vertical"></nz-divider>
                         </ng-container>
                         <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
-                            <a nz-popconfirm [nzPopconfirmTitle]="l('UserDeleteWarningMessage', item.userName)"
+                            <a nz-popconfirm [nzPopconfirmTitle]="l('HFuncDeleteWarningMessage', item.userName)"
                                 (nzOnConfirm)="deleteUser(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
                                 <i nz-icon nzType="delete"></i>
                                 {{'Delete' | localize}}

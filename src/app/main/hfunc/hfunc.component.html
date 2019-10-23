@@ -1,1 +1,132 @@
-<p>hfunc works!</p>
+<page-header [title]="title">
+    <ng-template #title>
+        隐藏功能
+        <span class="text-sm text-grey-dark">
+            <nz-divider nzType="vertical"></nz-divider>
+            隐藏功能管理.
+        </span>
+    </ng-template>
+</page-header>
+
+<nz-card [nzBordered]="false">
+    <form nz-form [nzLayout]="'inline'" class="search__form">
+        <nz-row nzGutter="24">
+            <nz-col nzSm="24">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-input-group nzSearch [nzAddOnAfter]="suffixSearchButton">
+                            <input type="text" nz-input [(ngModel)]="filterText" name="filterText"
+                                placeholder="{{'SearchWithThreeDot' | localize}}">
+                            <ng-template #suffixSearchButton>
+                                <button nz-button nzType="primary" nzSearch (click)="onSearch($event)">
+                                    <i nz-icon nzType="search"></i>
+                                </button>
+                            </ng-template>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </nz-col>
+        </nz-row>
+    </form>
+
+    <nz-row nzGutter="8">
+        <nz-col nzMd="24" nzSm="24">
+            <button nz-button [nzType]="'primary'" *ngIf="isGranted('Pages.Administration.Users.Create')"
+                (click)="createOrEdit()">
+                <i nz-icon nzType="plus"></i>
+                <span>
+                    添加隐藏功能
+                </span>
+            </button>
+            <ng-container *ngIf="selectedDataItems.length > 0">
+                <button nz-button [nzType]="'danger'" *ngIf="isGranted('Pages.Administration.Users.Delete')"
+                    (click)="batchDelete()">
+                    <i nz-icon nzType="delete"></i>
+                    <span>
+                        删除选中
+                    </span>
+                </button>
+            </ng-container>
+        </nz-col>
+    </nz-row>
+
+    <div class="my-md">
+        <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+            <ng-template #message>
+                <span>
+                    <strong class="text-primary">{{selectedDataItems.length}}</strong> items selected
+                </span>
+                <a (click)="restCheckStatus(dataList)" class="ml-md" *ngIf="selectedDataItems.length>0">
+                    {{'Clear' | localize}}
+                </a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="refresh()">
+                    {{'Refresh' | localize}}
+                </a>
+            </ng-template>
+        </nz-alert>
+    </div>
+
+    <nz-row class="my-md">
+        <nz-table #ajaxTable [nzData]="dataList" [nzTotal]="totalItems" [(nzPageIndex)]="pageNumber"
+            [(nzPageSize)]="pageSize" [nzLoading]="isTableLoading" (nzPageIndexChange)="pageNumberChange()"
+            (nzPageSizeChange)="refresh()" [nzShowSizeChanger]="true" [nzShowQuickJumper]="true"
+            [nzShowTotal]="totalTemplate" [nzFrontPagination]="false" [nzScroll]="{x: totalItems>0?'1500px':'auto'}">
+            <ng-template #totalTemplate let-total>
+                {{'TotalRecordsCount' | localize:total}}
+            </ng-template>
+
+            <thead (nzSortChange)="gridSort($event)">
+                <tr>
+                    <th nzShowCheckbox [(nzChecked)]="allChecked" [nzDisabled]="allCheckboxDisabled"
+                        [nzIndeterminate]="checkboxIndeterminate" (nzCheckedChange)="checkAll($event)" nzWidth="60px"
+                        nzLeft="0px"></th>
+
+                    <th nzShowSort nzSortKey="no">
+                        编号
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        功能描述
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of ajaxTable.data">
+                    <td nzShowCheckbox [(nzChecked)]="item.checked" (nzCheckedChange)="refreshCheckStatus(dataList)"
+                        nzLeft="0px"></td>
+                    <td>
+                        {{item.no}}
+                    </td>
+                    <td>
+                        {{item.name}}
+                    </td>
+                    <td>
+                        {{item.description}}
+                    </td>
+
+                    <td nzRight="0px" class="text-center">
+                        <ng-container *ngIf="isGranted('Pages.Administration.Users.Edit')">
+                            <a (click)="createOrEdit(item.id)">
+                                <i nz-icon nzType="edit"></i>
+                                {{'Edit' | localize}}
+                            </a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                        </ng-container>
+                        <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
+                            <a nz-popconfirm [nzPopconfirmTitle]="l('HFuncDeleteWarningMessage', item.name)"
+                                (nzOnConfirm)="deleteHFunc(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
+                                <i nz-icon nzType="delete"></i>
+                                {{'Delete' | localize}}
+                            </a>
+                        </ng-container>
+                    </td>
+                </tr>
+            </tbody>
+
+        </nz-table>
+    </nz-row>
+</nz-card>
