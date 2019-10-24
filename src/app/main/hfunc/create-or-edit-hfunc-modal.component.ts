@@ -6,7 +6,7 @@ import {
 
 import { ModalComponentBase } from '@shared/common/modal-component-base';
 
-import { HFuncServiceProxy } from '@shared/service-proxies/service-proxies';
+import { HFuncServiceProxy, HFuncEditDto, HFuncStatus, HFuncType } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-create-or-edit-hfunc-modal',
@@ -15,17 +15,30 @@ import { HFuncServiceProxy } from '@shared/service-proxies/service-proxies';
 })
 export class CreateOrEditHFuncModalComponent extends ModalComponentBase implements OnInit, AfterViewInit {
 
+  hFuncId?: number;
+  hFunc: HFuncEditDto = new HFuncEditDto();
 
   ngOnInit(): void {
+    this.init();
   }
 
+
+  init(): void {
+    this._hFuncServicePorxy.getHFuncForEdit(this.hFuncId).subscribe(result => {
+      this.hFunc = result.hFunc;
+    });
+  }
 
   ngAfterViewInit(): void {
   }
 
+  save(): void{
+
+  }
+
   constructor(
     injector: Injector,
-    private _userService: HFuncServiceProxy,
+    private _hFuncServicePorxy: HFuncServiceProxy,
   ) {
     super(injector);
   }

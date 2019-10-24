@@ -18,7 +18,7 @@ import { CreateOrEditHFuncModalComponent } from './hfunc/create-or-edit-hfunc-mo
         FormsModule,
         MainRoutingModule,
         AppCommonModule,
-        UtilsModule,        
+        UtilsModule,                
     ],
     declarations: [
         DashboardComponent, 
