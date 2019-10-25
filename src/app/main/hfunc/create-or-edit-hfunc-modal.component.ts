@@ -6,7 +6,8 @@ import {
 
 import { ModalComponentBase } from '@shared/common/modal-component-base';
 
-import { HFuncServiceProxy, HFuncEditDto, HFuncStatus, HFuncType } from '@shared/service-proxies/service-proxies';
+import { HFuncServiceProxy, HFuncEditDto, HFuncStatus, HFuncType, CreateOrUpdateHFuncInput } from '@shared/service-proxies/service-proxies';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-or-edit-hfunc-modal',
@@ -15,8 +16,15 @@ import { HFuncServiceProxy, HFuncEditDto, HFuncStatus, HFuncType } from '@shared
 })
 export class CreateOrEditHFuncModalComponent extends ModalComponentBase implements OnInit, AfterViewInit {
 
+  saving = false;
+
   hFuncId?: number;
   hFunc: HFuncEditDto = new HFuncEditDto();
+  hFuncTypes = HFuncType;
+  hFuncStatuses = HFuncStatus;
+
+  hFuncTypeArr = Object.keys(HFuncType).filter(hFType => typeof this.hFuncTypes[hFType] === 'number');
+  hFuncStatusArr = Object.keys(HFuncStatus).filter(hFStatus => typeof this.hFuncStatuses[hFStatus] === 'number');
 
   ngOnInit(): void {
     this.init();
@@ -32,7 +40,18 @@ export class CreateOrEditHFuncModalComponent extends ModalComponentBase implemen
   ngAfterViewInit(): void {
   }
 
-  save(): void{
+  save(): void {
+    this.saving = true;
+
+    const input = new CreateOrUpdateHFuncInput();
+    input.hFunc = this.hFunc;
+    this._hFuncServicePorxy
+      .createOrUpdateHFunc(input)
+      .pipe(finalize(() => this.saving = false))
+      .subscribe(() => {
+        this.notify.success(this.l('SavedSuccessfully'));
+        this.success();
+      })
 
   }
 
