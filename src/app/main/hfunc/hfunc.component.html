@@ -35,7 +35,7 @@
                 (click)="createOrEdit()">
                 <i nz-icon nzType="plus"></i>
                 <span>
-                    添加隐藏功能
+                    添加
                 </span>
             </button>
             <ng-container *ngIf="selectedDataItems.length > 0">
@@ -51,7 +51,7 @@
     </nz-row>
 
     <div class="my-md">
-        <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+        <!-- <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
             <ng-template #message>
                 <span>
                     <strong class="text-primary">{{selectedDataItems.length}}</strong> items selected
@@ -64,7 +64,7 @@
                     {{'Refresh' | localize}}
                 </a>
             </ng-template>
-        </nz-alert>
+        </nz-alert> -->
     </div>
 
     <nz-row class="my-md">
@@ -78,26 +78,33 @@
 
             <thead (nzSortChange)="gridSort($event)">
                 <tr>
-                    <th nzShowCheckbox [(nzChecked)]="allChecked" [nzDisabled]="allCheckboxDisabled"
+                    <!-- <th nzShowCheckbox [(nzChecked)]="allChecked" [nzDisabled]="allCheckboxDisabled"
                         [nzIndeterminate]="checkboxIndeterminate" (nzCheckedChange)="checkAll($event)" nzWidth="60px"
-                        nzLeft="0px"></th>
-
-                    <th nzShowSort nzSortKey="no">
+                        nzLeft="0px"></th> -->
+                    <th nzShowExpand></th>
+                    <th nzShowSort nzSortKey="No" nzWidth="10%">
                         编号
                     </th>
-                    <th>
+                    <th nzWidth="30%">
                         名称
                     </th>
-                    <th>
+                    <th nzWidth="50%">
                         功能描述
+                    </th>
+                    <th nzWidth="10%">
+                        操作
                     </th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr *ngFor="let item of ajaxTable.data">
-                    <td nzShowCheckbox [(nzChecked)]="item.checked" (nzCheckedChange)="refreshCheckStatus(dataList)"
-                        nzLeft="0px"></td>
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.checked" (nzCheckedChange)="refreshCheckStatus(dataList)"
+                        nzLeft="0px"></td> -->
+
+                    <td nzShowExpand [(nzExpand)]="!item">
+
+                    </td>
                     <td>
                         {{item.no}}
                     </td>
@@ -123,6 +130,23 @@
                                 {{'Delete' | localize}}
                             </a>
                         </ng-container>
+                    </td>
+                </tr>
+
+                <tr [nzExpand]="item">
+                    <td></td>
+                    <td colspan="3">
+                        <nz-table #innerTable [nzData]="dataList" [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <td>产品</td>
+                                    <td>版本</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of innerTable.data"></tr>
+                            </tbody>
+                        </nz-table>
                     </td>
                 </tr>
             </tbody>

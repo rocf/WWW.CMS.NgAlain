@@ -24,7 +24,7 @@
     </nz-form-label>
     <nz-form-control nz-col [nzSm]="7" [nzErrorTip]="statusValidationTpl">
         <nz-radio-group #statusRadio="ngModel" name="Status" [(ngModel)]="hFunc.status" [nzButtonStyle]="'solid'"
-            [nzSize]="'small'" id="Status">
+            id="Status">
             <label nz-radio-button [nzValue]="hFuncStatuses[hFuncStatus]" *ngFor="let hFuncStatus of hFuncStatusArr">
                 <span>{{ hFuncStatus | localize}}</span>
             </label>

@@ -2673,12 +2673,21 @@ export class HFuncServiceProxy {
 
     /**
      * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
-    getHFuncs(filter: string | null | undefined): Observable<PagedResultDtoOfHFuncListDto> {
+    getHFuncs(filter: string | null | undefined, sorting: string | null | undefined, maxResultCount: number | null | undefined, skipCount: number | null | undefined): Observable<PagedResultDtoOfHFuncListDto> {
         let url_ = this.baseUrl + "/api/services/app/HFunc/GetHFuncs?";
         if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&"; 
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

@@ -38,27 +38,32 @@ export class HFuncComponent extends PagedListingComponentBase<HFuncListDto> impl
 
   createOrEdit(id?: number): void {
     this.modalHelper
-    .createStatic(CreateOrEditHFuncModalComponent, { hFuncId: id }, { size: 'md'})
-    .subscribe(res => {
+      .createStatic(CreateOrEditHFuncModalComponent, { hFuncId: id }, { size: 'lg' })
+      .subscribe(res => {
         if (res) {
-            this.refresh();
+          this.refresh();
         }
-    });
+      });
   }
 
   batchDelete(): void {
     this.message.warn('功能未实现!');
   }
 
-  protected deleteHFunc(hfunc: HFuncListDto): void { 
+  protected deleteHFunc(hfunc: HFuncListDto): void {
     // this._hFuncServiceProxy.deleteHFunc(hfunc.id).subscribe(() => {
     //     this.refresh();
     //     this.notify.success(this.l('SuccessfullyDeleted'));
     // });
-}
+  }
 
   protected fetchDataList(request: PagedRequestDto, pageNumber: number, finishedCallback: () => void): void {
-    this._hFuncServiceProxy.getHFuncs(this.filterText)
+    this._hFuncServiceProxy.getHFuncs(
+      this.filterText,
+      request.sorting,
+      request.maxResultCount,
+      request.skipCount
+    )
       .pipe(finalize(finishedCallback))
       .subscribe((result: PagedResultDtoOfHFuncListDto) => {
         this.dataList = result.items;
