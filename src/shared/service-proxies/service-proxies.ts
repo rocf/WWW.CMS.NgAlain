@@ -2839,6 +2839,162 @@ export class HFuncServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    addOrUpdateProduct(input: AddOrUpdateProductInput | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/HFunc/AddOrUpdateProduct";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddOrUpdateProduct(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddOrUpdateProduct(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddOrUpdateProduct(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getProductForEdit(id: number | null | undefined): Observable<GetProductEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/HFunc/GetProductForEdit?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProductForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProductForEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<GetProductEditOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetProductEditOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetProductForEdit(response: HttpResponseBase): Observable<GetProductEditOutput> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? GetProductEditOutput.fromJS(resultData200) : new GetProductEditOutput();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetProductEditOutput>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteProduct(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/HFunc/DeleteProduct?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteProduct(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteProduct(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteProduct(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -12904,6 +13060,8 @@ export class HFuncListDto implements IHFuncListDto {
     riskStatement!: string | undefined;
     openSQL!: string | undefined;
     closeSQL!: string | undefined;
+    expand!: boolean | undefined;
+    products!: ProductInHFuncListDto[] | undefined;
     isDeleted!: boolean | undefined;
     deleterUserId!: number | undefined;
     deletionTime!: moment.Moment | undefined;
@@ -12934,6 +13092,12 @@ export class HFuncListDto implements IHFuncListDto {
             this.riskStatement = data["riskStatement"];
             this.openSQL = data["openSQL"];
             this.closeSQL = data["closeSQL"];
+            this.expand = data["expand"];
+            if (data["products"] && data["products"].constructor === Array) {
+                this.products = [] as any;
+                for (let item of data["products"])
+                    this.products!.push(ProductInHFuncListDto.fromJS(item));
+            }
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -12964,6 +13128,12 @@ export class HFuncListDto implements IHFuncListDto {
         data["riskStatement"] = this.riskStatement;
         data["openSQL"] = this.openSQL;
         data["closeSQL"] = this.closeSQL;
+        data["expand"] = this.expand;
+        if (this.products && this.products.constructor === Array) {
+            data["products"] = [];
+            for (let item of this.products)
+                data["products"].push(item.toJSON());
+        }
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -12987,6 +13157,8 @@ export interface IHFuncListDto {
     riskStatement: string | undefined;
     openSQL: string | undefined;
     closeSQL: string | undefined;
+    expand: boolean | undefined;
+    products: ProductInHFuncListDto[] | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -13006,6 +13178,66 @@ export enum HFuncStatus {
 export enum HFuncType {
     AddMenu = 1, 
     AddParameter = 2, 
+}
+
+export class ProductInHFuncListDto implements IProductInHFuncListDto {
+    productType!: ProductType | undefined;
+    version!: string | undefined;
+    creationTime!: moment.Moment | undefined;
+    creatorUserId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IProductInHFuncListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.productType = data["productType"];
+            this.version = data["version"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProductInHFuncListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductInHFuncListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["productType"] = this.productType;
+        data["version"] = this.version;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IProductInHFuncListDto {
+    productType: ProductType | undefined;
+    version: string | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export enum ProductType {
+    EShop5 = 1, 
+    EWeight = 2, 
+    EBeauty = 3, 
+    EShopFS5 = 4, 
+    EyBaby6 = 5, 
 }
 
 export class GetHFuncEditOutput implements IGetHFuncEditOutput {
@@ -13157,6 +13389,125 @@ export class CreateOrUpdateHFuncInput implements ICreateOrUpdateHFuncInput {
 
 export interface ICreateOrUpdateHFuncInput {
     hFunc: HFuncEditDto;
+}
+
+export class AddOrUpdateProductInput implements IAddOrUpdateProductInput {
+    product!: ProductEditDto;
+
+    constructor(data?: IAddOrUpdateProductInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.product = new ProductEditDto();
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.product = data["product"] ? ProductEditDto.fromJS(data["product"]) : new ProductEditDto();
+        }
+    }
+
+    static fromJS(data: any): AddOrUpdateProductInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddOrUpdateProductInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["product"] = this.product ? this.product.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IAddOrUpdateProductInput {
+    product: ProductEditDto;
+}
+
+export class ProductEditDto implements IProductEditDto {
+    hFuncId!: number | undefined;
+    productType!: ProductType | undefined;
+    version!: string | undefined;
+
+    constructor(data?: IProductEditDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.hFuncId = data["hFuncId"];
+            this.productType = data["productType"];
+            this.version = data["version"];
+        }
+    }
+
+    static fromJS(data: any): ProductEditDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductEditDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["hFuncId"] = this.hFuncId;
+        data["productType"] = this.productType;
+        data["version"] = this.version;
+        return data; 
+    }
+}
+
+export interface IProductEditDto {
+    hFuncId: number | undefined;
+    productType: ProductType | undefined;
+    version: string | undefined;
+}
+
+export class GetProductEditOutput implements IGetProductEditOutput {
+    products!: ProductEditDto | undefined;
+
+    constructor(data?: IGetProductEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.products = data["products"] ? ProductEditDto.fromJS(data["products"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetProductEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetProductEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["products"] = this.products ? this.products.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IGetProductEditOutput {
+    products: ProductEditDto | undefined;
 }
 
 export enum ChartDateInterval {

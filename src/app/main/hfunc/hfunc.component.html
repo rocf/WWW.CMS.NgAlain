@@ -98,58 +98,98 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let item of ajaxTable.data">
-                    <!-- <td nzShowCheckbox [(nzChecked)]="item.checked" (nzCheckedChange)="refreshCheckStatus(dataList)"
+                <ng-template ngFor let-item [ngForOf]="ajaxTable.data" let-i="index">
+                    <tr>
+                        <!-- <td nzShowCheckbox [(nzChecked)]="item.checked" (nzCheckedChange)="refreshCheckStatus(dataList)"
                         nzLeft="0px"></td> -->
 
-                    <td nzShowExpand [(nzExpand)]="!item">
+                        <td nzShowExpand [(nzExpand)]="item.expand">
 
-                    </td>
-                    <td>
-                        {{item.no}}
-                    </td>
-                    <td>
-                        {{item.name}}
-                    </td>
-                    <td>
-                        {{item.description}}
-                    </td>
+                        </td>
+                        <td>
+                            {{item.no}}
+                        </td>
+                        <td>
+                            {{item.name}}
+                        </td>
+                        <td>
+                            {{item.description}}
+                        </td>
 
-                    <td nzRight="0px" class="text-center">
-                        <ng-container *ngIf="isGranted('Pages.Administration.Users.Edit')">
-                            <a (click)="createOrEdit(item.id)">
-                                <i nz-icon nzType="edit"></i>
-                                {{'Edit' | localize}}
-                            </a>
-                            <nz-divider nzType="vertical"></nz-divider>
-                        </ng-container>
-                        <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
-                            <a nz-popconfirm [nzPopconfirmTitle]="l('HFuncDeleteWarningMessage', item.name)"
-                                (nzOnConfirm)="deleteHFunc(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
-                                <i nz-icon nzType="delete"></i>
-                                {{'Delete' | localize}}
-                            </a>
-                        </ng-container>
-                    </td>
-                </tr>
+                        <td nzRight="0px" class="text-center">
+                            <ng-container *ngIf="isGranted('Pages.Administration.Users.Edit')">
+                                <a (click)="createOrEdit(item.id)">
+                                    <i nz-icon nzType="edit"></i>
+                                    {{'Edit' | localize}}
+                                </a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                            </ng-container>
+                            <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
+                                <a nz-popconfirm [nzPopconfirmTitle]="l('HFuncDeleteWarningMessage', item.name)"
+                                    (nzOnConfirm)="deleteHFunc(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
+                                    <i nz-icon nzType="delete"></i>
+                                    {{'Delete' | localize}}
+                                </a>
+                            </ng-container>
+                        </td>
+                    </tr>
 
-                <tr [nzExpand]="item">
-                    <td></td>
-                    <td colspan="3">
-                        <nz-table #innerTable [nzData]="dataList" [nzShowPagination]="false">
-                            <thead>
-                                <tr>
-                                    <td>产品</td>
-                                    <td>版本</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of innerTable.data"></tr>
-                            </tbody>
-                        </nz-table>
-                    </td>
-                </tr>
-            </tbody>
+                    <tr [nzExpand]="item.expand">
+                        <td></td>
+                        <td colspan="4">
+                                <nz-row nzGutter="8">
+                                        <nz-col>
+                                            <button nz-button [nzType]="'primary'" nzSize="small"
+                                                (click)="addProduct(i)">
+                                                <i nz-icon nzType="plus"></i>
+                                                <span>
+                                                    添加
+                                                </span>
+                                            </button>
+                                        </nz-col>
+                                    </nz-row>
+                                    <nz-row nzGutter="8"> 
+                                        <nz-col>
+
+                                        
+                            <nz-table #innerTable [nzData]="item.product" [nzShowPagination]="false" [nzNoResult]="'暂无支持版本'">
+                                <thead>
+                                    <tr>
+                                        <td>产品</td>
+                                        <td>版本</td>
+                                        <td>操作</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of innerTable.data">
+                                        <td>{{ data.productType}}</td>
+                                        <td>{{ data.version }}</td>
+                                        <td>                                                
+                                                <ng-container *ngIf="isGranted('Pages.Administration.Users.Edit')">
+                                                        <a (click)="createOrEdit(item.id)">
+                                                            <i nz-icon nzType="edit"></i>
+                                                            {{'Edit' | localize}}
+                                                        </a>
+                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
+                                                        <a nz-popconfirm [nzPopconfirmTitle]="l('HFuncDeleteWarningMessage', item.name)"
+                                                            (nzOnConfirm)="deleteHFunc(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
+                                                            <i nz-icon nzType="delete"></i>
+                                                            {{'Delete' | localize}}
+                                                        </a>
+                                                    </ng-container>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                               
+                            </nz-table>
+                        </nz-col>
+                    </nz-row>
+                        </td>
+                    </tr>
+                </ng-template>
+        </tbody>
 
         </nz-table>
     </nz-row>

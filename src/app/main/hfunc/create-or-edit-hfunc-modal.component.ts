@@ -7,7 +7,7 @@ import {
 import { ModalComponentBase } from '@shared/common/modal-component-base';
 
 import { HFuncServiceProxy, HFuncEditDto, HFuncStatus, HFuncType, CreateOrUpdateHFuncInput } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-or-edit-hfunc-modal',
@@ -32,7 +32,8 @@ export class CreateOrEditHFuncModalComponent extends ModalComponentBase implemen
 
 
   init(): void {
-    this._hFuncServicePorxy.getHFuncForEdit(this.hFuncId).subscribe(result => {
+    this._hFuncServicePorxy.getHFuncForEdit(this.hFuncId)                       
+                          .subscribe(result => {
       this.hFunc = result.hFunc;
     });
   }

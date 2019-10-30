@@ -6,8 +6,9 @@ import {
   PagedRequestDto,
 } from '@shared/common/paged-listing-component-base'
 
-import { HFuncServiceProxy, HFuncListDto, HFuncStatus, HFuncType, PagedResultDtoOfHFuncListDto } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs/operators';
+import { HFuncServiceProxy, HFuncListDto, HFuncStatus, HFuncType, PagedResultDtoOfHFuncListDto, 
+          ProfileServiceProxy, ProductInHFuncListDto, ProductType, ProductEditDto, AddOrUpdateProductInput } from '@shared/service-proxies/service-proxies';
+import { finalize, tap, map } from 'rxjs/operators';
 
 import { CreateOrEditHFuncModalComponent } from './create-or-edit-hfunc-modal.component';
 
@@ -50,6 +51,9 @@ export class HFuncComponent extends PagedListingComponentBase<HFuncListDto> impl
     this.message.warn('功能未实现!');
   }
 
+  addProduct(index: number): void{
+ 
+  }
   protected deleteHFunc(hfunc: HFuncListDto): void {
     // this._hFuncServiceProxy.deleteHFunc(hfunc.id).subscribe(() => {
     //     this.refresh();
@@ -64,7 +68,11 @@ export class HFuncComponent extends PagedListingComponentBase<HFuncListDto> impl
       request.maxResultCount,
       request.skipCount
     )
-      .pipe(finalize(finishedCallback))
+      .pipe(
+        finalize(finishedCallback),
+        tap(val => console.log(val.items)),
+        
+      )
       .subscribe((result: PagedResultDtoOfHFuncListDto) => {
         this.dataList = result.items;
         this.showPaging(result);
