@@ -7,7 +7,7 @@ import {
 } from '@shared/common/paged-listing-component-base'
 
 import { HFuncServiceProxy, HFuncListDto, HFuncStatus, HFuncType, PagedResultDtoOfHFuncListDto, 
-          ProfileServiceProxy, ProductInHFuncListDto, ProductType, ProductEditDto, AddOrUpdateProductInput } from '@shared/service-proxies/service-proxies';
+        ProductInHFuncListDto, ProductType, ProductEditDto, AddOrUpdateProductInput } from '@shared/service-proxies/service-proxies';
 import { finalize, tap, map } from 'rxjs/operators';
 
 import { CreateOrEditHFuncModalComponent } from './create-or-edit-hfunc-modal.component';
@@ -20,8 +20,10 @@ import { CreateOrEditHFuncModalComponent } from './create-or-edit-hfunc-modal.co
 export class HFuncComponent extends PagedListingComponentBase<HFuncListDto> implements OnInit {
 
   filterText = '';
-
-
+  product: ProductEditDto = new ProductEditDto();
+  productTypes = ProductType;
+  productTypeArr = Object.keys(ProductType).filter(productType => typeof this.productTypes[productType] === 'number');
+  newProduct: AddOrUpdateProductInput = new AddOrUpdateProductInput();
 
   constructor(
     injector: Injector,
@@ -51,9 +53,17 @@ export class HFuncComponent extends PagedListingComponentBase<HFuncListDto> impl
     this.message.warn('功能未实现!');
   }
 
-  addProduct(index: number): void{
- 
+  saveProduct(id: number): void {
+    this.newProduct.product.hFuncId = id;
+
+    this._hFuncServiceProxy.addOrUpdateProduct(this.newProduct)
+                          .subscribe(result => {
+                            this.newProduct.product.version="";
+
+                            this.notify.success(this.l('SavedSuccessfully'));
+                          })    
   }
+
   protected deleteHFunc(hfunc: HFuncListDto): void {
     // this._hFuncServiceProxy.deleteHFunc(hfunc.id).subscribe(() => {
     //     this.refresh();
