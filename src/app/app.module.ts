@@ -34,6 +34,8 @@ import { SettingDrawerItemComponent } from '@appshared/layout/setting-drawer/set
 import { FileUploadModule } from 'ng2-file-upload';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
+import { ClipboardModule } from 'ngx-clipboard';
+
 const NAVCOMPONENTS = [
     HeaderComponent,
     SidebarComponent,
@@ -52,7 +54,8 @@ const NAVCOMPONENTS = [
         UtilsModule,
         AppCommonModule.forRoot(),
         FileUploadModule,
-        ImageCropperModule
+        ImageCropperModule,
+        ClipboardModule
     ],
     declarations: [
         AppComponent,

@@ -81,17 +81,17 @@
                     <!-- <th nzShowCheckbox [(nzChecked)]="allChecked" [nzDisabled]="allCheckboxDisabled"
                         [nzIndeterminate]="checkboxIndeterminate" (nzCheckedChange)="checkAll($event)" nzWidth="60px"
                         nzLeft="0px"></th> -->
-                    <th nzShowExpand></th>
-                    <th nzShowSort nzSortKey="No" nzWidth="10%">
+                    <th nzShowExpand nzLeft="0px" nzWidth="5%"></th>
+                    <th nzShowSort nzSortKey="No" nzWidth="10%" nzLeft="5%">
                         编号
                     </th>
                     <th nzWidth="30%">
                         名称
                     </th>
-                    <th nzWidth="50%">
+                    <th nzWidth="45%">
                         功能描述
                     </th>
-                    <th nzWidth="10%">
+                    <th nzWidth="10%" nzRight="0px" class="text-center">
                         操作
                     </th>
                 </tr>
@@ -103,10 +103,9 @@
                         <!-- <td nzShowCheckbox [(nzChecked)]="item.checked" (nzCheckedChange)="refreshCheckStatus(dataList)"
                         nzLeft="0px"></td> -->
 
-                        <td nzShowExpand [(nzExpand)]="item.expand">
-
+                        <td nzShowExpand [(nzExpand)]="item.expand" nzWidth="5%" nzLeft="0px">
                         </td>
-                        <td>
+                        <td nzLeft="5%">
                             {{item.no}}
                         </td>
                         <td>
@@ -118,19 +117,26 @@
 
                         <td nzRight="0px" class="text-center">
                             <ng-container *ngIf="isGranted('Pages.Administration.Users.Edit')">
+                                <a (click)="copyHFunc(i)">
+                                    <i nz-icon nzType="copy"></i>
+                                    复制
+                                </a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                            </ng-container>
+                            <ng-container *ngIf="isGranted('Pages.Administration.Users.Edit')">
                                 <a (click)="createOrEdit(item.id)">
                                     <i nz-icon nzType="edit"></i>
                                     {{'Edit' | localize}}
                                 </a>
-                                <nz-divider nzType="vertical"></nz-divider>
+                                <!-- <nz-divider nzType="vertical"></nz-divider> -->
                             </ng-container>
-                            <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
+                            <!-- <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
                                 <a nz-popconfirm [nzPopconfirmTitle]="l('HFuncDeleteWarningMessage', item.name)"
                                     (nzOnConfirm)="deleteHFunc(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
                                     <i nz-icon nzType="delete"></i>
                                     {{'Delete' | localize}}
                                 </a>
-                            </ng-container>
+                            </ng-container> -->
                         </td>
                     </tr>
 
@@ -168,9 +174,13 @@
                     <td>                        
                         <ng-container *ngIf="isGranted('Pages.Administration.Users.Delete')">
                             <a nz-popconfirm [nzPopconfirmTitle]="'是否删除？'"
-                                (nzOnConfirm)="deleteHFunc(item)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
-                                <i nz-icon nzType="delete"></i>
-                                {{'Delete' | localize}}
+                                (nzOnConfirm)="deleteProduct(i, data)" [nzOkText]="l('Ok')" [nzCancelText]="l('Cancel')">
+                                <span nz-tooltip nzTooltipTitle="刪除">
+                                <button nz-button [nzType]="'danger'" nzShape="circle" nzSize="middle">
+                                    <i nz-icon nzType="delete"></i>
+                                </button>
+                                </span>
+                                <!-- {{'Delete' | localize}} -->
                             </a>
                         </ng-container>
                     </td>
@@ -189,7 +199,7 @@
                     <td>
                         <span nz-tooltip nzTooltipTitle="保存">
                             <button nz-button [nzType]="'primary'" nzShape="circle" nzSize="middle"
-                                (click)="saveProduct(item.id)">
+                                (click)="saveProduct(i, item)">
 
 
                                 <i nz-icon nzType="save"></i>

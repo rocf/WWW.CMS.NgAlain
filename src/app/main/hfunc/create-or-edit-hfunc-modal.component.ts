@@ -32,10 +32,10 @@ export class CreateOrEditHFuncModalComponent extends ModalComponentBase implemen
 
 
   init(): void {
-    this._hFuncServicePorxy.getHFuncForEdit(this.hFuncId)                       
-                          .subscribe(result => {
-      this.hFunc = result.hFunc;
-    });
+    this._hFuncServicePorxy.getHFuncForEdit(this.hFuncId)
+      .subscribe(result => {
+        this.hFunc = result.hFunc;
+      });
   }
 
   ngAfterViewInit(): void {
