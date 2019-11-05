@@ -6,8 +6,8 @@ import {
   PagedRequestDto,
 } from '@shared/common/paged-listing-component-base';
 
-import { HFuncServiceProxy, HFuncListDto, HFuncStatus, HFuncType, PagedResultDtoOfHFuncListDto,
-        ProductInHFuncListDto, ProductType, ProductEditDto, AddOrUpdateProductInput, EntityDto } from '@shared/service-proxies/service-proxies';
+import { HFuncServiceProxy, HFuncListDto,  PagedResultDtoOfHFuncListDto,
+        ProductInHFuncListDto, ProductType, ProductEditDto, AddOrUpdateProductInput } from '@shared/service-proxies/service-proxies';
 import { finalize, tap, map } from 'rxjs/operators';
 
 import { CreateOrEditHFuncModalComponent } from './create-or-edit-hfunc-modal.component';
@@ -76,9 +76,9 @@ export class HFuncComponent extends PagedListingComponentBase<HFuncListDto> impl
 
   deleteProduct(index:number, product: ProductInHFuncListDto): void {
     this._hFuncServiceProxy.deleteProduct(product.id)
-                          .subscribe(result => {
-                            this.notify.success(this.l('SuccessfullyDeleted'));
+                          .subscribe(result => {                            
                             this.dataList[index].products = this.dataList[index].products.filter(p => p.id != product.id);
+                            this.notify.success(this.l('SuccessfullyDeleted'));
                           })
   }
 

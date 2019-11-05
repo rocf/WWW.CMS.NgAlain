@@ -18,6 +18,7 @@ export class CreateOrEditHFuncModalComponent extends ModalComponentBase implemen
 
   saving = false;
 
+  hFuncNoCustom: boolean = false;
   hFuncId?: number;
   hFunc: HFuncEditDto = new HFuncEditDto();
   hFuncTypes = HFuncType;
@@ -25,6 +26,13 @@ export class CreateOrEditHFuncModalComponent extends ModalComponentBase implemen
 
   hFuncTypeArr = Object.keys(HFuncType).filter(hFType => typeof this.hFuncTypes[hFType] === 'number');
   hFuncStatusArr = Object.keys(HFuncStatus).filter(hFStatus => typeof this.hFuncStatuses[hFStatus] === 'number');
+
+  constructor(
+    injector: Injector,
+    private _hFuncServicePorxy: HFuncServiceProxy,
+  ) {
+    super(injector);
+  }
 
   ngOnInit(): void {
     this.init();
@@ -53,14 +61,16 @@ export class CreateOrEditHFuncModalComponent extends ModalComponentBase implemen
         this.notify.success(this.l('SavedSuccessfully'));
         this.success();
       })
-
   }
 
-  constructor(
-    injector: Injector,
-    private _hFuncServicePorxy: HFuncServiceProxy,
-  ) {
-    super(injector);
+  hFuncNoSwitch(): void {
+    if(this.hFuncNoCustom)
+    {
+      this.hFunc.no = "TMPNO";
+    }
+    else
+    {
+      this.hFunc.no = "";
+    }
   }
-
 }

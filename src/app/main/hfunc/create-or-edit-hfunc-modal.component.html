@@ -11,12 +11,22 @@
     <nz-form-label nz-col [nzSm]="4" nzFor="No" nzRequired>
         编号
     </nz-form-label>
-    <nz-form-control nz-col [nzSm]="7" [nzErrorTip]="noValidationTpl" nzHasFeedback>
-        <input nz-input #noInput="ngModel" name="No" [(ngModel)]="hFunc.no" placeholder="编号" id="No" required
-            minlength="5" maxlength="5" [disabled]="hFuncId">
+    <nz-form-control nz-col [nzSm]="5" [nzErrorTip]="noValidationTpl" nzHasFeedback>
+        <input nz-input  #noInput="ngModel" name="No" [(ngModel)]="hFunc.no" placeholder="编号" id="No" required
+            minlength="5" maxlength="5" [disabled]="hFuncId || hFuncNoCustom"/>
         <ng-template #noValidationTpl let-control>
             <validation-messages [formCtrl]="control"></validation-messages>
         </ng-template>
+    </nz-form-control>
+    <nz-form-control nz-col [nzSm]="2">
+        <div *ngIf="!hFuncId">
+            <span nz-tooltip nzTooltipTitle="未知编号">
+                <nz-switch name="customNO" [(ngModel)]="hFuncNoCustom" (ngModelChange)="hFuncNoSwitch()" [nzCheckedChildren]="checkedTemplate"
+                [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
+                <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+                <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+            </span>
+        </div>
     </nz-form-control>
 
     <nz-form-label nz-col [nzSm]="4" nzFor="Status" nzRequired>
