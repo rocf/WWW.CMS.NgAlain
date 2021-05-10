@@ -4321,15 +4321,10 @@ lodash.tail@^4.1.1:
   resolved "http://registry.npm.taobao.org/lodash.tail/download/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
   integrity sha1-0jM6NtnncXyK0vfKyv7HwytERmQ=
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5:
-  version "4.17.11"
-  resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
-  integrity sha1-s56mIp72B+zYniyN8SU2iRysm40=
-
-lodash@^4.17.12, lodash@^4.17.15:
-  version "4.17.15"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.17.5:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log4js@^4.0.0:
   version "4.0.2"
@@ -4750,10 +4745,20 @@ neo-async@^2.5.0:
   resolved "http://registry.npm.taobao.org/neo-async/download/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha1-udFeTXHGdikIZUtRg+04t1M0CDU=
 
-ng-zorro-antd@8.2.0, ng-zorro-antd@^8.1.2:
+ng-zorro-antd@^8.1.2:
   version "8.2.0"
   resolved "https://registry.npm.taobao.org/ng-zorro-antd/download/ng-zorro-antd-8.2.0.tgz?cache=0&sync_timestamp=1565703739876&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fng-zorro-antd%2Fdownload%2Fng-zorro-antd-8.2.0.tgz#06532401522921a8645e20fccb015a0069470e99"
   integrity sha1-BlMkAVIpIahkXiD8ywFaAGlHDpk=
+  dependencies:
+    "@angular/cdk" "^8.0.0"
+    "@ant-design/icons-angular" "^8.0.2"
+    date-fns "^1.30.1"
+    tslib "^1.9.0"
+
+ng-zorro-antd@^8.2.0:
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/ng-zorro-antd/-/ng-zorro-antd-8.5.2.tgz#575ea85a75df7bfcc8712e82f819b355fade6b2b"
+  integrity sha512-x+QJULyU1IXiAbf/lFPxYC/JUJvBGzU9UXnXSyLnMPZpdtEXodaF/L1N1CpSUr5SimLiHRe/jsVHDWkg0HqfYg==
   dependencies:
     "@angular/cdk" "^8.0.0"
     "@ant-design/icons-angular" "^8.0.2"
@@ -4764,6 +4769,14 @@ ng2-file-upload@^1.3.0:
   version "1.3.0"
   resolved "http://registry.npm.taobao.org/ng2-file-upload/download/ng2-file-upload-1.3.0.tgz#d90f8f568f62383462175f8bdfa0096b131f277a"
   integrity sha1-2Q+PVo9iODRiF1+L36AJaxMfJ3o=
+
+ngx-clipboard@^12.2.1:
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/ngx-clipboard/-/ngx-clipboard-12.3.1.tgz#565d73b946b10719242e532e748ad912cf8bc97a"
+  integrity sha512-qrUmkfYXEBQZQ4wNKno8yw5eOSxtdkzCPFFPil/XVVc93MNIKUme8aLbS3TEMB4PGsxopjbuTAzV7fptiSOIww==
+  dependencies:
+    ngx-window-token "^2.0.0"
+    tslib "^1.9.0"
 
 ngx-countdown@^3.0.0:
   version "3.2.0"
@@ -4776,6 +4789,13 @@ ngx-image-cropper@^1.3.8:
   version "1.3.8"
   resolved "http://registry.npm.taobao.org/ngx-image-cropper/download/ngx-image-cropper-1.3.8.tgz#db363614a9732e5f32bdc85a0b235aa0cb5958c6"
   integrity sha1-2zY2FKlzLl8yvchaCyNaoMtZWMY=
+  dependencies:
+    tslib "^1.9.0"
+
+ngx-window-token@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-window-token/-/ngx-window-token-2.0.1.tgz#8f91221af4116aa9f49bb3f7a6f1111639884fba"
+  integrity sha512-rvqdqJEfnWXQFU5fyfYt06E10tR/UtFOYdF3QebfcOh5VIJhnTKiprX8e4B9OrX7WEVFm9BT8uV72xXcEgsaKA==
   dependencies:
     tslib "^1.9.0"
 
